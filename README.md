@@ -2,13 +2,19 @@
 
 I recorded what I studied in "Backjoon Online Judge" in preparation for the coding test.
 
+---
+
 ##### BaekJoon Input
 
 src="/dev/stdin"
 
+---
+
 ##### Local Input
 
 src="../input.txt"
+
+---
 
 ##### Commit Message
 
