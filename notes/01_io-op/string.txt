@@ -1,0 +1,17 @@
+toStrigng()
+    ->String으로 명시적 형 변환
+
+단항더하기+
+    뒤의 피연산자가 Number면 Number로 변환,
+    아닌 경우 NaN로 변환.
+    true, false, null 도 각각 1, 0, 0으로 변환
+    BigInt 값은 숫자로 변환 불가->TypeError
+
+trim()
+    문자열 앞 뒤 공백을 제거.
+
+split()
+    인수로 구분 문자를 입력하여 해당 문자를 기준으로 구분하고 배열을 생성.
+    ex) input.txt = "1 2 3"
+        .split(" ");
+        input = ["1", "2", "3"]
