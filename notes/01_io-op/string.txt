@@ -1,4 +1,4 @@
-toStrigng()
+toString()
     ->String으로 명시적 형 변환
 
 단항더하기+
@@ -15,3 +15,8 @@ split()
     ex) input.txt = "1 2 3"
         .split(" ");
         input = ["1", "2", "3"]
+
+# fs module 사용 시, fs.readFileSync("file").toString().trim().split();
+split() 전에 trim() 을 하는 이유: file의 내용이
+123\n123\n123\n 의 경우, TypeError 발생 ["123", "123", "123", ?]
+trim()으로 양 끝의 공백을 제거해준다.
