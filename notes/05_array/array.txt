@@ -36,3 +36,6 @@ arr.reduce(callback(accumulator, currentValue, currentIndex, array), initialValu
     currentIndex    처리할 현재 요소의 index
     array           reduce()를 호출한 배열
     initialValue    acc의 초기값, 설정하지 않을 경우 array의 첫 번째 요소를 사용한다.
+
+    배열 내 모든 요소에 대해 callback 함수를 실행하고 accumulator를 반환한다.
+    배열 요소들의 합 구할 때 편리하다.
