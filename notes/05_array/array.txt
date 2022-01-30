@@ -21,3 +21,18 @@ arr.indexOf(searchElement, fromIndex)
 
     배열 내에서 searchIndex를 찾아서 있을 경우 해당 요소의 index를 반환한다.
     없을 경우 -1를 반환한다. fromIndex로 검색을 시작할 index를 지정할 수 있다.
+
+arr.slice(begin, end)
+    begin   추출 시작점에 대한 index
+    end     추출 종료 할 index (end index를 제외하고 추출)
+
+    배열 요소 중 begin index 부터 end index 까지 추출하여 반환한다.
+    ex) slice(1, 4)는   1번 index 부터 (4-1=3)3번 index 까지 추출.
+                        =2번째 요소부터 4번째 요소까지 추출.
+
+arr.reduce(callback(accumulator, currentValue, currentIndex, array), initialValue)
+    accumulator     initialValue, 설정하지 않을 경우 array의 첫 번째 요소
+    currentValue    처리할 현재 요소, initialValue 설정하지 않을 경우 array의 두 번째 요소
+    currentIndex    처리할 현재 요소의 index
+    array           reduce()를 호출한 배열
+    initialValue    acc의 초기값, 설정하지 않을 경우 array의 첫 번째 요소를 사용한다.
