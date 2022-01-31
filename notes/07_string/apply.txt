@@ -1,0 +1,5 @@
+Function.apply(thisObj, argArray)
+    thisObj     Function을 호출하는데 제공될 this의 값
+    argsArray   Function의 인수로 사용할 Array
+
+    Math.max.apply(null, array) 를 통해 배열 내 최댓값을 구할 수 있다.

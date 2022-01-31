@@ -1,0 +1,12 @@
+str.charCodeAt(index)
+    index   0 이상이고 문자열의 길이보다 작은 정수. 
+            숫자가 아니라면 0을 기본값으로 사용한다.
+
+    string -> ascii
+
+String.fromCharCode(num1, ..., numN)
+    num1, ..., numN     0~65535(0xFFFF) 의 숫자 뭉치.
+                        0xFFFF 초과 시 값을 자른다.
+    
+
+    ascii -> string 
