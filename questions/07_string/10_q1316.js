@@ -3,30 +3,26 @@ const input = fs.readFileSync("../input.txt").toString().trim().split("\n");
 
 const n = +input[0];
 const words = input.slice(1, n + 1);
-let alphas;
-let pos;
-let oldFoundPos;
-let newFoundPos;
+
+let pos, foundPos;
 let foundCnt;
 let groupWord;
 let groupWordCnt = 0;
 
 words.forEach((word) => {
-  alphas = word.split("");
+  let alphas = word.split("");
   groupWord = true;
   alphas.forEach((alpha) => {
     pos = 0;
     foundCnt = 0;
     while (pos < word.length) {
-      newFoundPos = word.indexOf(alpha, pos);
-      if (newFoundPos === -1) break;
+      foundPos = word.indexOf(alpha, pos);
+      if (foundPos === -1) break;
       foundCnt++;
       if (foundCnt > 1) {
-        groupWord = newFoundPos - oldFoundPos === 1 ? true : false;
-        if (!groupWord) break;
+        groupWord = pos === foundPos ? groupWord : false;
       }
-      pos = newFoundPos + 1;
-      oldFoundPos = newFoundPos;
+      pos = foundPos + 1;
     }
   });
   groupWordCnt += groupWord ? 1 : 0;
