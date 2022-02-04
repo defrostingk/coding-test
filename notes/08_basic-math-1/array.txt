@@ -1,0 +1,23 @@
+array copy
+    shallow copy
+        original array와 copy array가 같은 주소를 공유하여
+        어느 한 쪽의 데이터를 변경하면 두 array 모두 값이 변한다.
+
+    deep copy
+        original array와 copy array가 다른 주소를 공유하며,
+        어느 한 쪽의 데이터를 변경하면 어느 한 쪽의 데이터만 값이 변한다.
+
+
+    copyArray = oriArray: shallow copy
+    copyArray = [...oriArray]:  1 depth 까지 deep copy,
+                                2 depth 부터 shallow copy
+
+        * 2 depth 까지 deep copy하는 방법
+            copyArray = {...oriArray, a:{...oriArray.a}}
+
+    copyArray = Object.assign([], oriArray)
+        :   1 depth 까지 deep copy,
+            2 depth 부터 shallow copy
+        
+    copyArray = JSON.parse(JSON.stringify(oriArray))
+        :   deep copy
