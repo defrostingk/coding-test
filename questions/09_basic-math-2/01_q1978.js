@@ -4,12 +4,12 @@ const input = fs.readFileSync("../input.txt").toString().trim().split("\n");
 const data = input[1].split(" ").map((x) => +x);
 let result = 0;
 const isPrimNum = (num) => {
-  let devider = 2;
-  while (devider < num) {
-    if (num % devider === 0) break;
-    devider++;
+  let divider = 2;
+  while (divider < num) {
+    if (num % divider === 0) break;
+    divider++;
   }
-  return devider === num ? true : false;
+  return divider === num ? true : false;
 };
 
 data.forEach((num) => (result += isPrimNum(num) ? 1 : 0));

@@ -3,8 +3,8 @@ const input = fs.readFileSync("../input.txt").toString().trim().split("\n");
 
 const isPrimeNum = (num) => {
   if (num < 2) return false;
-  let devider = Math.floor(Math.sqrt(num));
-  for (let i = 2; i <= devider; i++) if (num % i === 0) return false;
+  let divider = Math.floor(Math.sqrt(num));
+  for (let i = 2; i <= divider; i++) if (num % i === 0) return false;
   return true;
 };
 
