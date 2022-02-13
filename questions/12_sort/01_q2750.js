@@ -112,10 +112,6 @@ const quickSort = (data, startIdx, endIdx) => {
   return data;
 };
 
-const mergeSort = (data) => {};
-const heapSort = (data) => {};
-const countingSord = (data) => {};
-
 const printSortedData = (data, sortFunction) => {
   if (sortFunction === quickSort) {
     console.log(
