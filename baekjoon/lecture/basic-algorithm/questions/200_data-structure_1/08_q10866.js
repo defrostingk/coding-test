@@ -4,44 +4,79 @@ const input = fs.readFileSync("../input.txt").toString().trim().split("\n");
 input.shift();
 const commands = input.map((x) => x.split(/\s+/));
 
+class Node {
+  constructor(data) {
+    this.data = data;
+    this.prev = null;
+    this.next = null;
+  }
+}
+
 class Deque {
   constructor() {
-    this.deque = [];
-    this.head = 0;
-    this.tail = 0;
+    this.head = null;
+    this.tail = null;
+    this.dequeSize = 0;
   }
   push_front(data) {
-    for (let i = this.tail - 1; i >= 0; i--) this.deque[i + 1] = this.deque[i];
-    this.deque[0] = data;
-    this.tail++;
+    const node = new Node(data);
+    if (!this.dequeSize) {
+      this.tail = node;
+    } else {
+      node.next = this.head;
+      this.head.prev = node;
+    }
+    this.head = node;
+    this.dequeSize++;
   }
   push_back(data) {
-    this.deque[this.tail++] = data;
+    const node = new Node(data);
+    if (!this.dequeSize) {
+      this.head = node;
+    } else {
+      this.tail.next = node;
+      node.prev = this.tail;
+    }
+    this.tail = node;
+    this.dequeSize++;
   }
   pop_front() {
-    if (!this.tail) return -1;
-    this.tail--;
-    return this.deque.splice(this.head, 1)[0];
+    if (!this.dequeSize) return -1;
+    const popped = this.head.data;
+    if (this.head === this.tail) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      this.head = this.head.next;
+      this.head.prev = null;
+    }
+    this.dequeSize--;
+    return popped;
   }
   pop_back() {
-    if (!this.tail) return -1;
-    this.tail--;
-    return this.deque.splice(this.tail, 1)[0];
+    if (!this.dequeSize) return -1;
+    const popped = this.tail.data;
+    if (this.head === this.tail) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      this.tail = this.tail.prev;
+      this.tail.next = null;
+    }
+    this.dequeSize--;
+    return popped;
   }
   size() {
-    return this.tail;
+    return this.dequeSize;
   }
   empty() {
-    if (this.tail) return 0;
-    return 1;
+    return this.dequeSize ? 0 : 1;
   }
   front() {
-    if (!this.tail) return -1;
-    return this.deque[this.head];
+    return this.dequeSize ? this.head.data : -1;
   }
   back() {
-    if (!this.tail) return -1;
-    return this.deque[this.tail - 1];
+    return this.dequeSize ? this.tail.data : -1;
   }
 }
 
