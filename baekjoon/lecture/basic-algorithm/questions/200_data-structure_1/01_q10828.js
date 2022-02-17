@@ -2,45 +2,72 @@ const fs = require("fs");
 const input = fs.readFileSync("../input.txt").toString().trim().split("\n");
 
 input.shift();
-
 const commands = input.map((x) => x.split(/\s+/));
-let stack = [];
-let top = -1;
 
-const newPush = (data) => {
-  stack[++top] = data;
-  return 0;
-};
-const newPop = () => {
-  if (top < 0) return -1;
-  top--;
-  return stack.splice(-1)[0];
-};
-const newSize = () => {
-  return top + 1;
-};
-const newEmpty = () => {
-  return top < 0 ? 1 : 0;
-};
-const newTop = () => {
-  return top < 0 ? -1 : stack[top];
-};
+class Node {
+  constructor(data) {
+    this.data = data;
+    this.next = null;
+  }
+}
+
+class Stack {
+  constructor() {
+    this.top = null;
+    this.stackSize = 0;
+  }
+  push(data) {
+    let node = new Node(data);
+    node.next = this.top;
+    this.top = node;
+    this.stackSize++;
+  }
+  pop() {
+    if (!this.top) return -1;
+    const popped = this.top.data;
+    this.top = this.top.next;
+    this.stackSize--;
+    return popped;
+  }
+  size() {
+    return this.stackSize;
+  }
+  empty() {
+    return this.stackSize ? 0 : 1;
+  }
+  peak() {
+    if (!this.top) return -1;
+    return this.top.data;
+  }
+}
 
 const commandProcessing = (commandArr) => {
   result = "";
+  let stack = new Stack();
   commandArr.forEach((command) => {
-    if (command[0] === "push") newPush(command[1]);
-    else {
-      if (command[0] === "pop") result += newPop();
-      else if (command[0] === "size") result += newSize();
-      else if (command[0] === "empty") result += newEmpty();
-      else if (command[0] === "top") result += newTop();
-      else result += "Command is wrong";
-      result += "\n";
+    switch (command[0]) {
+      case "push":
+        stack.push(command[1]);
+        break;
+      case "pop":
+        result += stack.pop() + "\n";
+        break;
+      case "size":
+        result += stack.size() + "\n";
+        break;
+      case "empty":
+        result += stack.empty() + "\n";
+        break;
+      case "top":
+        result += stack.peak() + "\n";
+        break;
+      default:
+        break;
     }
   });
 
-  return result.trim();
+  console.log(result.trim());
+  return 0;
 };
 
-console.log(commandProcessing(commands));
+commandProcessing(commands);
