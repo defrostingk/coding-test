@@ -3,23 +3,23 @@ const input = fs.readFileSync("../input.txt").toString().trim().split("\n");
 
 const [n, sequence] = input.map((x) => x.split(/\s+/).map((x) => +x));
 
+const stackTop = (stack) => {
+  return stack.length ? stack[stack.length - 1] : undefined;
+};
+
 const getNGE = (sequence) => {
-  let NGE = "";
-  let { length } = sequence;
-  let stack = [];
+  const { length } = sequence;
+  const stack = [];
+  const nge = new Array(length).fill(-1);
 
   for (let i = 0; i < length; i++) {
-    let j = i;
-    stack = [];
-    while (sequence[j++] <= sequence[i]) {
-      if (j >= length) break;
-      stack.push(sequence[j]);
+    while (stack.length && sequence[stackTop(stack)] < sequence[i]) {
+      nge[stack.pop()] = sequence[i];
     }
-    console.log(stack, stack.length);
-    NGE += stack.length ? stack.pop() + " " : "-1 ";
+    stack.push(i);
   }
 
-  return NGE.trim();
+  return nge.join(" ");
 };
 
 console.log(getNGE(sequence));
