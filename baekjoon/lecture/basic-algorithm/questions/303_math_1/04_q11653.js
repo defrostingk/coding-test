@@ -1,15 +1,15 @@
 const fs = require("fs");
-const integer = +fs.readFileSync("../input.txt").toString().trim();
+const naturalNum = +fs.readFileSync("../input.txt").toString().trim();
 
-const factorization = (integer) => {
-  if (integer === 1) return;
+const factorization = (naturalNum) => {
+  if (naturalNum === 1) return;
   const primeFactor = [];
   let factor = 2;
 
-  while (integer > 1) {
-    if (integer % factor === 0) {
+  while (naturalNum > 1) {
+    if (naturalNum % factor === 0) {
       primeFactor.push(factor);
-      integer /= factor;
+      naturalNum /= factor;
     } else {
       factor++;
     }
@@ -18,4 +18,4 @@ const factorization = (integer) => {
   console.log(primeFactor.join("\n"));
 };
 
-factorization(integer);
+factorization(naturalNum);
