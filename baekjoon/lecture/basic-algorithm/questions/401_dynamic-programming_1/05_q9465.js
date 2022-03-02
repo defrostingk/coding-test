@@ -17,20 +17,21 @@ const getMaxScore = (testCase) => {
   const top = testCase.shift();
   const bottom = testCase.shift();
   let score = Array.from(Array(width + 1), () => new Array(3));
-  let tmp;
+  let curTop, curBottom, past;
   score[1][0] = 0;
   score[1][1] = top[0];
   score[1][2] = bottom[0];
+
   for (let i = 2; i <= width; i++) {
-    score[i][0] = Math.max(...score[i - 1]);
-    tmp = Math.max(score[i - 1][2] + top[i - 1], score[i - 1][0] + top[i - 1]);
-    score[i][1] = tmp;
-    tmp = Math.max(
-      score[i - 1][1] + bottom[i - 1],
-      score[i - 1][0] + bottom[i - 1]
-    );
-    score[i][2] = tmp;
+    curTop = top[i - 1];
+    curBottom = bottom[i - 1];
+    past = score[i - 1];
+
+    score[i][0] = Math.max(...past);
+    score[i][1] = Math.max(past[2] + curTop, past[0] + curTop);
+    score[i][2] = Math.max(past[1] + curBottom, past[0] + curBottom);
   }
+
   return Math.max(score[width][0], score[width][1], score[width][2]);
 };
 
