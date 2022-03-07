@@ -1,5 +1,4 @@
 const fs = require("fs");
-const { promisify } = require("util");
 const height = +fs.readFileSync("../input.txt").toString().trim();
 
 /**
