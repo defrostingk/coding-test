@@ -13,16 +13,18 @@ const part = [];
 let result = [];
 
 dfs(0);
-console.log([...new Set(result)].join("\n"));
+console.log(result.join("\n"));
 
 function dfs(cnt) {
   if (cnt === m) {
     result.push(part.join(" "));
     return;
   } else {
+    let prev;
     for (let i = 0; i < n; i++) {
-      if (!visited[i]) {
+      if (!visited[i] && prev !== nums[i]) {
         visited[i] = true;
+        prev = nums[i];
         part.push(nums[i]);
         dfs(cnt + 1);
         part.pop();
