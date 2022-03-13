@@ -6,34 +6,22 @@ const [n, m] = fs
   .split(/\s+/)
   .map(Number);
 
-printPermutationWithRepetitionOneToN(n, m);
+const combination = [];
+let result = "";
 
-function printPermutationWithRepetitionOneToN(n, r) {
-  const permutation = getPermutationWithRepetitionOneToN(n, r).map((v) =>
-    v.join(" ")
-  );
-  console.log(permutation.join("\n"));
-}
-function getPermutationWithRepetitionOneToN(n, r) {
-  const numArr = new Array(n).fill().map((v, i) => (v = i + 1));
-  return getPermutationWithRepetition(numArr, r);
-}
+dfs(0);
 
-function getPermutationWithRepetition(numArr, r) {
-  let result = [];
-  if (r === 1) {
-    return numArr.map((v) => [v]);
+console.log(result.trim());
+
+function dfs(cnt) {
+  if (cnt === m) {
+    result += combination.join(" ") + "\n";
+    return;
   }
 
-  numArr.forEach((fixed, idx, ori) => {
-    const rest = ori;
-    const permutationOfRest = getPermutationWithRepetition(rest, r - 1);
-    const part = permutationOfRest.map((permutation) => [
-      fixed,
-      ...permutation,
-    ]);
-    result.push(...part);
-  });
-
-  return result;
+  for (let i = 1; i <= n; i++) {
+    combination.push(i);
+    dfs(cnt + 1);
+    combination.pop();
+  }
 }
