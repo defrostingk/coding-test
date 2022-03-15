@@ -18,7 +18,12 @@ src="../input.txt"
 
 ##### Commit Message
 
-stage_stageNumber_stageName_questionStageNumber
+stage-stageNumber-stageName-questionOrder
 
-    ex) stage_01_io-op_01
-        stage_01_io-op_01-05
+    ex) stage-01-io_op-01
+        stage-01-io_op-01_05
+
+lecture-lectureName-categoryName-questionOrder
+
+    ex) lecture-basic_algorithm-520_brute_force-02
+        lecture-basic_algorithm-520_brute_force-02_03
