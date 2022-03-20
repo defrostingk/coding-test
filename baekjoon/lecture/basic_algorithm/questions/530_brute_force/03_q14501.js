@@ -11,34 +11,17 @@ function printMaxEarnings(n, schedule) {
 }
 
 function getMaxEarnings(n, schedule) {
-  return Math.max(...getEarnings(n, schedule));
-}
+  let earnings = new Array(n).fill(0);
 
-function getEarnings(n, schedule) {
-  const part = [];
-  const earnings = [];
-  let earning;
-
-  dfs(0);
-
-  return earnings;
-
-  function dfs(idx) {
-    if (idx > n) {
-      part.pop();
-      earning = part.reduce((acc, cur) => (acc += cur), 0);
-      earnings.push(earning);
-      part.push(0);
-      return;
-    } else if (idx === n) {
-      earning = part.reduce((acc, cur) => (acc += cur), 0);
-      earnings.push(earning);
-      return;
-    }
-    for (let i = idx; i < n; i++) {
-      part.push(schedule[i][1]);
-      dfs(i + schedule[i][0]);
-      part.pop();
+  for (let i = 0; i < n; i++) {
+    const [duration, earning] = schedule[i];
+    if (i + duration <= n) {
+      earnings[i] += earning;
+      for (j = i + duration; j < n; j++) {
+        earnings[j] = Math.max(earnings[j], earnings[i]);
+      }
     }
   }
+
+  return Math.max(...earnings);
 }
