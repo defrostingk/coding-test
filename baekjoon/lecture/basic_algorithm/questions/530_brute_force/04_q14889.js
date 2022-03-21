@@ -14,65 +14,56 @@ function printMinDiffOfTeamStatus(n, status) {
 }
 
 function getMinDiffOfTeamStatus(players, status) {
-  let min = 1000;
-  getTeams(players).forEach((teams) => {
-    const teamA = teams[0];
-    const teamB = teams[1];
-    min = Math.min(min, getDiffOfTeamStatus(teamA, teamB, status));
-  });
-  return min;
-}
-
-function getTeams(players) {
-  const teams = [];
-  const teamA = [];
-  let teamB = [];
-  const visited = new Array(players).fill(false);
+  const visited = new Array(players);
   const members = players / 2;
+  let teamA = [];
+  let teamB = [];
+  const diff = [];
 
-  dfs(0, 0);
+  dfs(0, 1);
+
+  return Math.min(...diff);
 
   function dfs(depth, idx) {
-    if (depth === members && teamA[0] === 1) {
+    if (depth === members) {
+      teamA = [];
       teamB = [];
-      visited.forEach((v, i) => {
-        if (!v) {
+      for (let i = 0; i < players; i++) {
+        if (visited[i]) {
+          teamA.push(i + 1);
+        } else {
           teamB.push(i + 1);
         }
-      });
-      teams.push([[...teamA], teamB]);
+      }
+      diff.push(getDiffOfTeamStatus(teamA, teamB, status));
       return;
     }
+
     for (let i = idx; i < players; i++) {
       if (!visited[i]) {
         visited[i] = true;
-        teamA.push(i + 1);
         dfs(depth + 1, i);
-        teamA.pop();
         visited[i] = false;
       }
     }
   }
-
-  return teams;
 }
 
-function getDiffOfTeamStatus(team1, team2, status) {
-  return Math.abs(getTeamStatus(team1, status) - getTeamStatus(team2, status));
+function getDiffOfTeamStatus(teamA, teamB, status) {
+  return Math.abs(getTeamStatus(teamA, status) - getTeamStatus(teamB, status));
 }
 
 function getTeamStatus(team, status) {
   let teamStatus = 0;
-  const combination = [];
+  let playerA, playerB;
 
   for (let i = 0; i < team.length - 1; i++) {
     for (let j = i + 1; j < team.length; j++) {
-      combination.push([team[i], team[j]]);
+      playerA = team[i];
+      playerB = team[j];
+      teamStatus += status[playerA][playerB] + status[playerB][playerA];
     }
   }
-  combination.forEach((combi) => {
-    teamStatus += status[combi[0]][combi[1]] + status[combi[1]][combi[0]];
-  });
 
   return teamStatus;
 }
