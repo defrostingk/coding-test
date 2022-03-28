@@ -3,9 +3,6 @@ const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
 
 const players = +input.shift();
 const status = input.map((column) => column.split(' ').map(Number));
-const zeroPadding = new Array(players).fill(0);
-status.unshift(zeroPadding);
-status.forEach((column) => column.unshift(0));
 
 console.log(getMinDiff(players, status));
 
@@ -26,9 +23,9 @@ function getMinDiff(players, status) {
       link = [];
       for (let i = 0; i < players; i++) {
         if (visited[i]) {
-          start.push(i + 1);
+          start.push(i);
         } else {
-          link.push(i + 1);
+          link.push(i);
         }
       }
       diff.push(getDiff(start, link, status));
