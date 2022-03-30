@@ -3,16 +3,18 @@ const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
 
 const [node, edge] = input.shift().split(' ').map(Number);
 
-const adjacencyList = Array.from(Array(node + 1), () => new Array());
+const adjacencyMatrix = Array.from(Array(node + 1), () =>
+  new Array(node + 1).fill(0)
+);
 input.forEach((connection) => {
   const [start, end] = connection.split(' ').map(Number);
-  adjacencyList[start].push(end);
-  adjacencyList[end].push(start);
+  adjacencyMatrix[start][end] = 1;
+  adjacencyMatrix[end][start] = 1;
 });
 
-console.log(cntConnectedComponent(adjacencyList));
+console.log(cntConnectedComponent(adjacencyMatrix));
 
-function cntConnectedComponent(adjList) {
+function cntConnectedComponent(adjMatrix) {
   const visited = new Array(node + 1);
   let cnt = 0;
 
@@ -25,10 +27,9 @@ function cntConnectedComponent(adjList) {
   function dfs(start) {
     if (visited[start]) return 0;
     visited[start] = true;
-    for (let i = 0; i < adjList[start].length; i++) {
-      let nodeNext = adjList[start][i];
-      if (!visited[nodeNext]) {
-        dfs(nodeNext);
+    for (let i = 1; i <= node; i++) {
+      if (!visited[i] && adjMatrix[start][i]) {
+        dfs(i);
       }
     }
     return 1;
