@@ -23,7 +23,7 @@ function isBipartiteGraph(node, nodeConnection) {
   const visited = new Array(node + 1);
 
   for (let i = 1; i <= node; i++) {
-    bfs(i, 1);
+    dfs(i, 1);
   }
 
   for (let i = 1; i <= node; i++) {
@@ -36,22 +36,13 @@ function isBipartiteGraph(node, nodeConnection) {
 
   return true;
 
-  function bfs(nodeStart, visitedGroup) {
-    const queue = [];
-    let nodeCurrent, nodeNext;
-
-    queue.push(nodeStart);
-    while (queue.length) {
-      nodeCurrent = queue.shift();
-      if (!visited[nodeCurrent]) {
-        visited[nodeCurrent] = visitedGroup;
-        for (let i = 0; i < adjList[nodeCurrent].length; i++) {
-          nodeNext = adjList[nodeCurrent][i];
-          if (!visited[nodeNext]) {
-            queue.push(nodeNext);
-            visitedGroup *= -1;
-          }
-        }
+  function dfs(nodeStart, visitedGroup) {
+    if (visited[nodeStart]) return;
+    visited[nodeStart] = visitedGroup;
+    for (let i = 0; i < adjList[nodeStart].length; i++) {
+      let nodeNext = adjList[nodeStart][i];
+      if (!visited[nodeNext]) {
+        dfs(nodeNext, -visitedGroup);
       }
     }
   }
