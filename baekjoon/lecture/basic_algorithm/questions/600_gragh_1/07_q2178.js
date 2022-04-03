@@ -9,28 +9,29 @@ console.log(getMinPath(maze, width, height));
 function getMinPath(maze, width, height) {
   const visited = Array.from(Array(height), () => new Array(width));
   const AVAILABLE = '1';
-  const cnt = [];
-  const dy = [-1, 1, 0, 0];
   const dx = [0, 0, -1, 1];
+  const dy = [-1, 1, 0, 0];
 
-  dfs([0, 0], 0);
+  bfs([0, 0]);
 
-  return Math.min(...cnt);
+  return visited[height - 1][width - 1];
 
-  function dfs([x, y], depth) {
-    if (x === width - 1 && y === height - 1) {
-      cnt.push(depth + 1);
-      return;
-    }
-    let xNext, yNext;
-    for (let i = 0; i < 4; i++) {
-      xNext = x + dx[i];
-      yNext = y + dy[i];
-      if (xNext >= 0 && yNext >= 0 && xNext < width && yNext < height) {
-        if (maze[yNext][xNext] === AVAILABLE && !visited[yNext][xNext]) {
-          visited[yNext][xNext] = 1;
-          dfs([xNext, yNext], depth + 1);
-          visited[yNext][xNext] = 0;
+  function bfs([x, y]) {
+    let xCur, yCur, xNext, yNext;
+    const queue = [[x, y]];
+    visited[y][x] = 1;
+
+    while (queue.length) {
+      [xCur, yCur] = queue.shift();
+
+      for (let i = 0; i < 4; i++) {
+        xNext = xCur + dx[i];
+        yNext = yCur + dy[i];
+        if (xNext >= 0 && yNext >= 0 && xNext < width && yNext < height) {
+          if (maze[yNext][xNext] === AVAILABLE && !visited[yNext][xNext]) {
+            visited[yNext][xNext] = visited[yCur][xCur] + 1;
+            queue.push([xNext, yNext]);
+          }
         }
       }
     }
