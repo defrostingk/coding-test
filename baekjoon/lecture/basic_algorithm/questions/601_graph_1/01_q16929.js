@@ -13,7 +13,7 @@ function isCycleExist() {
 
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
-      if (exist) break;
+      if (exist) return 'Yes';
       for (let i = 0; i < height; i++) {
         visited[i].fill(0);
       }
@@ -22,7 +22,7 @@ function isCycleExist() {
     }
   }
 
-  return exist ? 'Yes' : 'No';
+  return 'No';
 
   function dfs(startNode, currentNode, depth, color) {
     const [xCur, yCur] = currentNode;
