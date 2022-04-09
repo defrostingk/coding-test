@@ -1,9 +1,9 @@
 const fs = require('fs');
 const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
 
-console.log(isCorrectOrderForBfs(input));
+console.log(isCorrectOrder(input));
 
-function isCorrectOrderForBfs(input) {
+function isCorrectOrder(input) {
   const nodes = +input[0];
   const edges = input.slice(1, -1).map((edge) => edge.split(' ').map(Number));
   const [answer] = input.slice(-1).map((str) => str.split(' ').map(Number));
@@ -17,33 +17,27 @@ function isCorrectOrderForBfs(input) {
     order[answer[i]] = i + 1;
   }
 
-  for (let i = 1; i <= nodes; i++) {
-    adjacencyList[i].sort((a, b) => order[a] - order[b]);
-  }
+  adjacencyList.map((node) => node.sort((a, b) => order[a] - order[b]));
 
-  const correct = bfs(1);
-
-  return +cmpArray(correct, answer);
+  return bfs(1);
 
   function bfs(start) {
     const visited = new Array(nodes + 1);
-    const queue = [];
-    const result = [];
-    queue.push(start);
-    result.push(start);
+    const queue = [start];
+    let head = 0;
     visited[start] = 1;
 
-    while (queue.length) {
-      const current = queue.shift();
+    while (queue.length > head) {
+      const current = queue[head];
+      if (answer[head++] !== current) return 0;
       for (let next of adjacencyList[current]) {
         if (!visited[next]) {
           queue.push(next);
-          result.push(next);
           visited[next] = 1;
         }
       }
     }
-    return result;
+    return 1;
   }
 }
 
@@ -54,8 +48,4 @@ function getAdjacencyList(nodes, edges) {
     adjList[to].push(from);
   });
   return adjList;
-}
-
-function cmpArray(a, b) {
-  return a.toString() === b.toString();
 }
