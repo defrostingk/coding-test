@@ -9,7 +9,7 @@ const MAX = 100000;
 console.log(getShortestTime(n, k));
 
 function getShortestTime(n, k) {
-  if (n === k) return 0;
+  if (n >= k) return n - k;
   const visited = new Array(MAX + 1);
   const queue = [n];
   let head = 0;
@@ -31,6 +31,6 @@ function getShortestTime(n, k) {
   return -1;
 
   function isAvailable(num) {
-    return num >= 0 && num < MAX + 1 && !visited[num];
+    return num >= 0 && num <= MAX && !visited[num];
   }
 }
