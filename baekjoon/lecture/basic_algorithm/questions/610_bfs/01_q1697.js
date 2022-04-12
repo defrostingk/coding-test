@@ -4,7 +4,7 @@ const [n, k] = fs
   .toString()
   .split(' ')
   .map(Number);
-const MAX = 100000;
+const MAX = k * 2 <= 100000 ? k * 2 : 100000;
 
 console.log(getShortestTime(n, k));
 
