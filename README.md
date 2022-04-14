@@ -2,6 +2,8 @@
 
 I recorded what I studied in "Backjoon Online Judge" in preparation for the coding test.
 
+[![Solved.ac](http://mazassumnida.wtf/api/generate_badge?boj=haedongk)](https://solved.ac/profile/haedongk)
+
 ---
 
 ##### BaekJoon Input
