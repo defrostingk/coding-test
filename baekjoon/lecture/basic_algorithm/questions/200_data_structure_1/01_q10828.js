@@ -1,5 +1,5 @@
-const fs = require("fs");
-const input = fs.readFileSync("../input.txt").toString().trim().split("\n");
+const fs = require('fs');
+const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
 
 input.shift();
 const commands = input.map((x) => x.split(/\s+/));
@@ -42,24 +42,24 @@ class Stack {
 }
 
 const commandProcessing = (commandArr) => {
-  result = "";
+  result = '';
   let stack = new Stack();
   commandArr.forEach((command) => {
     switch (command[0]) {
-      case "push":
+      case 'push':
         stack.push(command[1]);
         break;
-      case "pop":
-        result += stack.pop() + "\n";
+      case 'pop':
+        result += stack.pop() + '\n';
         break;
-      case "size":
-        result += stack.size() + "\n";
+      case 'size':
+        result += stack.size() + '\n';
         break;
-      case "empty":
-        result += stack.empty() + "\n";
+      case 'empty':
+        result += stack.empty() + '\n';
         break;
-      case "top":
-        result += stack.peak() + "\n";
+      case 'top':
+        result += stack.peak() + '\n';
         break;
       default:
         break;
