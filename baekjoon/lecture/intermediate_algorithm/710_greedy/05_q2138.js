@@ -11,25 +11,23 @@ function getMinClicks() {
   let cnt = 0;
   let cntClicked = 1;
 
-  clickSwitch(0, bulbsClicked);
   for (let i = 1; i < bulbs; i++) {
     if (bulbsCurrent[i - 1] !== bulbsTarget[i - 1]) {
       clickSwitch(i, bulbsCurrent);
       cnt++;
     }
+  }
+  if (isMatch(bulbsCurrent)) return cnt;
+
+  clickSwitch(0, bulbsClicked);
+  for (let i = 1; i < bulbs; i++) {
     if (bulbsClicked[i - 1] !== bulbsTarget[i - 1]) {
       clickSwitch(i, bulbsClicked);
       cntClicked++;
     }
   }
 
-  return isMatch(bulbsCurrent) && isMatch(bulbsClicked)
-    ? Math.min(cnt, cntClicked)
-    : isMatch(bulbsCurrent)
-    ? cnt
-    : isMatch(bulbsClicked)
-    ? cntClicked
-    : -1;
+  return isMatch(bulbsClicked) ? cntClicked : -1;
 
   function clickSwitch(switchNum, bulbsArr) {
     if (switchNum === 0) {
