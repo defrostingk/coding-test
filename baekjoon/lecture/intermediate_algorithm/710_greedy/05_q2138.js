@@ -5,46 +5,45 @@ console.log(getMinClicks());
 
 function getMinClicks() {
   const bulbs = +input[0];
-  const bulbsCurrent = input[1].split('').map(Number);
-  const bulbsClicked = input[1].split('').map(Number);
-  const bulbsTarget = input[2].split('').map(Number);
+  const bulbsCurrent = input[1].split('');
+  const bulbsClicked = input[1].split('');
+  const bulbsTarget = input[2];
   let cnt = 0;
   let cntClicked = 1;
 
   for (let i = 1; i < bulbs; i++) {
-    if (bulbsCurrent[i - 1] !== bulbsTarget[i - 1]) {
+    if (!isMatch(i - 1, bulbsCurrent)) {
       clickSwitch(i, bulbsCurrent);
       cnt++;
     }
   }
-  if (isMatch(bulbsCurrent)) return cnt;
+  if (isMatch(bulbs - 1, bulbsCurrent)) return cnt;
 
   clickSwitch(0, bulbsClicked);
   for (let i = 1; i < bulbs; i++) {
-    if (bulbsClicked[i - 1] !== bulbsTarget[i - 1]) {
+    if (!isMatch(i - 1, bulbsClicked)) {
       clickSwitch(i, bulbsClicked);
       cntClicked++;
     }
   }
 
-  return isMatch(bulbsClicked) ? cntClicked : -1;
+  return isMatch(bulbs - 1, bulbsClicked) ? cntClicked : -1;
 
   function clickSwitch(switchNum, bulbsArr) {
-    if (switchNum === 0) {
-      bulbsArr[switchNum + 1] = 1 - bulbsArr[switchNum + 1];
-    } else if (switchNum === bulbs - 1) {
-      bulbsArr[switchNum - 1] = 1 - bulbsArr[switchNum - 1];
-    } else {
-      bulbsArr[switchNum - 1] = 1 - bulbsArr[switchNum - 1];
-      bulbsArr[switchNum + 1] = 1 - bulbsArr[switchNum + 1];
+    if (switchNum < bulbs - 1) {
+      toggleBulb(switchNum + 1, bulbsArr);
     }
-    bulbsArr[switchNum] = 1 - bulbsArr[switchNum];
+    if (switchNum > 1) {
+      toggleBulb(switchNum - 1, bulbsArr);
+    }
+    toggleBulb(switchNum, bulbsArr);
   }
 
-  function isMatch(bulbsArr) {
-    for (let i = 0; i < bulbs; i++) {
-      if (bulbsArr[i] !== bulbsTarget[i]) return false;
-    }
-    return true;
+  function toggleBulb(idx, bulbsArr) {
+    bulbsArr[idx] = bulbsArr[idx] === '0' ? '1' : '0';
+  }
+
+  function isMatch(idx, bulbsArr) {
+    return bulbsArr[idx] === bulbsTarget[idx];
   }
 }
