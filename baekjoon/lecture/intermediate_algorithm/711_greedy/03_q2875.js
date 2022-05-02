@@ -12,7 +12,7 @@ function solution(input) {
   let [females, males, interns] = input;
 
   let teams = Math.min(Math.floor(females / 2), males);
-  let remainder = females + males - teams * 3 - interns;
-  teams += Math.min(Math.floor(remainder / 3), 0);
+  let required = females + males - teams * 3 - interns;
+  teams += Math.min(Math.floor(required / 3), 0);
   console.log(teams);
 }
