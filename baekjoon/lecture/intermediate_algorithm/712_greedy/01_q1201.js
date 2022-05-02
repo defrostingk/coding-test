@@ -11,7 +11,6 @@ solution(input);
 function solution(input) {
   const [n, m, k] = input;
 
-  //
   // 가장 긴 감소하는 부분 수열의 길이가 K
   // -> 최대 K개의 원소를 가지며 적어도 하나는 K개의 원소를 가지도록
   // -> 모든 수열을 reverse 상태의
@@ -31,12 +30,7 @@ function solution(input) {
   const result = [sequence.slice(0, k)];
   const sliced = sequence.slice(k);
 
-  const partLength = [];
-  let partCnt = 0;
-  while (partCnt < m - 1) {
-    partLength.push(0);
-    partCnt++;
-  }
+  const partLength = new Array(m - 1).fill(0);
 
   let slicedLength = sliced.length;
   while (slicedLength) {
