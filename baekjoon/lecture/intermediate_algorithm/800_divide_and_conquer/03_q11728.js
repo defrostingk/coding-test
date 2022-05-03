@@ -12,10 +12,10 @@ function solution(input) {
   let idxA = 0;
   let idxB = 0;
   for (let i = 0; i < result.length; i++) {
-    if (arrA[idxA] >= arrB[idxB]) result[i] = arrB[idxB++];
-    else if (idxA === n) result[i] = arrB[idxB++];
-    else if (arrA[idxA] < arrB[idxB]) result[i] = arrA[idxA++];
+    if (idxA === n) result[i] = arrB[idxB++];
     else if (idxB === m) result[i] = arrA[idxA++];
+    else if (arrA[idxA] >= arrB[idxB]) result[i] = arrB[idxB++];
+    else if (arrA[idxA] < arrB[idxB]) result[i] = arrA[idxA++];
   }
 
   console.log(result.join(' '));
