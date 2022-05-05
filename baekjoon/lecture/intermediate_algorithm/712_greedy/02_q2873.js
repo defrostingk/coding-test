@@ -28,6 +28,7 @@ const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
     const minCoordinates = getMinCoordinates();
     const refY = minCoordinates.y % 2 ? minCoordinates.y - 1 : minCoordinates.y;
     const refX = minCoordinates.x % 2 ? minCoordinates.x - 1 : minCoordinates.x;
+
     rrdlld(0, refY);
 
     for (let x = 0; x < refX; x++) {
@@ -58,7 +59,6 @@ const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
     }
 
     result.pop();
-
     if (minCoordinates.x === width - 2) {
       if (!(minCoordinates.x % 2)) result.pop();
       result.push('D');
