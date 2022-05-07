@@ -1,5 +1,4 @@
-const fs = require('fs');
-const s = fs.readFileSync('01.txt').toString().trim();
+const s = 'one4seveneight';
 
 function solution(s) {
   var answer = 0;
