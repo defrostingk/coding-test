@@ -11,7 +11,6 @@ const [n, r, c] = input;
   const size = 2 ** (2 * n);
   const target = { y: r, x: c };
   let cnt = 0;
-  let found = 0;
 
   check(size, 0, 0);
 
