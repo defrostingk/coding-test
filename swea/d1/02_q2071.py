@@ -5,7 +5,7 @@ stdin = open('/mnt/repository/coding-test/swea/input.txt', 'r')
 next(stdin)
 
 for idx, line in enumerate(stdin):
-    nums = map(int, line.split())
+    nums = list(map(int, line.split()))
     average = 0
     for num in nums:
         average += float(num)
