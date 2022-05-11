@@ -15,9 +15,8 @@ const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
   for (let i = 0; i < n; i++) {
     const idx = sequence[i][1];
     swap += getSum(1, 0, n - 1, idx + 1, n - 1);
-    update(1, 0, n - 1, idx);
+    update(1, 0, n - 1, idx, 1);
   }
-
   console.log(swap);
 
   function getSum(node, start, end, qStart, qEnd) {
@@ -31,12 +30,12 @@ const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
     );
   }
 
-  function update(node, start, end, idx) {
-    if (start === end) return (tree[node] = 1);
+  function update(node, start, end, idx, diff) {
+    if (start === end) return (tree[node] = diff);
 
     const mid = Math.floor((start + end) / 2);
-    if (idx <= mid) update(node * 2, start, mid, idx);
-    else update(node * 2 + 1, mid + 1, end, idx);
+    if (idx <= mid) update(node * 2, start, mid, idx, diff);
+    else update(node * 2 + 1, mid + 1, end, idx, diff);
 
     tree[node] = tree[node * 2] + tree[node * 2 + 1];
   }
