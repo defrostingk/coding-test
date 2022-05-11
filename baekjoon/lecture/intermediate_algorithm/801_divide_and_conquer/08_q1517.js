@@ -8,7 +8,7 @@ const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
     .map((value, idx) => [+value, idx])
     .sort((a, b) => a[0] - b[0]);
 
-  const treeSize = n * 4 + 1;
+  const treeSize = 2 ** Math.ceil(Math.log2(n) + 1);
   const tree = new Array(treeSize).fill(0);
 
   let swap = 0;
