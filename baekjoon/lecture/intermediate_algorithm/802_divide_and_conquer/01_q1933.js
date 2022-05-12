@@ -2,39 +2,87 @@ const fs = require('fs');
 const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
 
 (function solution(input) {
-  const n = +input[0];
-  const buildings = input.slice(1).map((building) => {
+  class PriorityQueue {
+    constructor() {
+      this.heap = [];
+      this.size = 0;
+    }
+
+    enqueue(building) {
+      this.size++;
+      let idx = this.size;
+
+      while (idx !== 1) {
+        const parentIdx = Math.floor(idx / 2);
+        if (this.heap[parentIdx].x >= building.x) {
+          this.heap[idx] = this.heap[parentIdx];
+          idx = parentIdx;
+        } else break;
+      }
+
+      this.heap[idx] = building;
+    }
+
+    dequeue() {
+      if (this.isEmpty()) return;
+      let popped = this.heap[1];
+      let tmp = this.heap.pop();
+      this.heap[1] = tmp;
+      this.size--;
+
+      let parent = 1;
+      let child = 2;
+
+      while (child <= this.size) {
+        if (
+          this.heap[child + 1] &&
+          this.heap[child].x > this.heap[child + 1].x &&
+          child < this.size
+        ) {
+          child++;
+        }
+        if (tmp.x <= this.heap[child].x) break;
+        this.heap[parent] = this.heap[child];
+        parent = child;
+        child *= 2;
+      }
+      this.heap[parent] = tmp;
+
+      return popped;
+    }
+
+    isEmpty() {
+      return !this.size;
+    }
+  }
+
+  const pq = new PriorityQueue();
+  input.slice(1).forEach((building) => {
     const [left, height, right] = building.split(' ').map(Number);
-    return { left, right, height };
+    pq.enqueue({ x: left, height });
+    pq.enqueue({ x: right, height: -height });
   });
 
-  // x좌표의 범위 구하기
-  let maxRight = 0;
-  for (let i = 0; i < n - 1; i++) {
-    if (maxRight < buildings[i].right) {
-      maxRight = buildings[i].right;
-    }
-  }
-
-  // 각 x좌표의 최대 height 구하기
-  const heights = new Array(maxRight + 1).fill(0);
-  for (let i = 0; i < n; i++) {
-    for (let j = buildings[i].left; j < buildings[i].right; j++) {
-      if (heights[j] < buildings[i].height) {
-        heights[j] = buildings[i].height;
-      }
-    }
-  }
-
-  // 최대 높이가 바뀌는 지점 저장하기
+  const heights = new Map();
   const skyline = [];
-  let prevHeight = 0;
-  for (let i = 0; i <= maxRight; i++) {
-    if (prevHeight !== heights[i]) {
-      skyline.push([i, heights[i]]);
-      prevHeight = heights[i];
+
+  let preHeight = 0;
+  let maxHeight = 0;
+  while (!pq.isEmpty()) {
+    const { x, height } = pq.dequeue();
+    if (height > 0) {
+      heights.set(height, x);
+      if (maxHeight < height) maxHeight = height;
+    } else {
+      heights.delete(-height);
+      maxHeight = heights.size ? Math.max(...heights.keys()) : 0;
+    }
+
+    if (preHeight !== maxHeight) {
+      skyline.push(x, maxHeight);
+      preHeight = maxHeight;
     }
   }
 
-  console.log(skyline.flat().join(' '));
+  console.log(skyline.join(' '));
 })(input);
