@@ -5,7 +5,6 @@ const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
   const sudoku = input.map((row) => row.split(' ').map(Number));
   const SIZE = 9;
   const EMPTY = 0;
-  const answer = Array.from(Array(SIZE), () => new Array(SIZE));
 
   const empty = [];
   for (let y = 0; y < SIZE; y++) {
@@ -14,17 +13,14 @@ const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
     }
   }
 
+  let found = 0;
   dfs(0);
 
-  answer.forEach((row) => console.log(row.join(' ')));
-
   function dfs(cnt) {
+    if (found) return;
     if (cnt >= empty.length) {
-      for (let y = 0; y < SIZE; y++) {
-        for (let x = 0; x < SIZE; x++) {
-          answer[y][x] = sudoku[y][x];
-        }
-      }
+      sudoku.forEach((row) => console.log(row.join(' ')));
+      found = 1;
       return;
     }
 
