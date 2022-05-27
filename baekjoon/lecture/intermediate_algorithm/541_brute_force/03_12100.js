@@ -18,9 +18,9 @@ const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
     }
     for (let dir = 0; dir < 4; dir++) {
       const nextBoard = Array.from(Array(n), () => new Array(n));
-      for (let j = 0; j < n; j++) {
-        for (let i = 0; i < n; i++) {
-          nextBoard[j][i] = board[j][i];
+      for (let y = 0; y < n; y++) {
+        for (let x = 0; x < n; x++) {
+          nextBoard[y][x] = board[y][x];
         }
       }
       moveBlocks(nextBoard, dir);
@@ -38,17 +38,12 @@ const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
               board[y][x] = 0;
             }
           }
-          let tmp;
           let idx = 0;
           while (queue.length) {
-            tmp = queue.shift();
+            const tmp = queue.shift();
             if (!board[idx][x]) board[idx][x] = tmp;
-            else if (board[idx][x] === tmp) {
-              board[idx][x] *= 2;
-              idx++;
-            } else {
-              board[++idx][x] = tmp;
-            }
+            else if (board[idx][x] === tmp) board[idx++][x] *= 2;
+            else board[++idx][x] = tmp;
           }
         }
         break;
@@ -60,17 +55,12 @@ const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
               board[y][x] = 0;
             }
           }
-          let tmp;
           let idx = n - 1;
           while (queue.length) {
-            tmp = queue.shift();
+            const tmp = queue.shift();
             if (!board[idx][x]) board[idx][x] = tmp;
-            else if (board[idx][x] === tmp) {
-              board[idx][x] *= 2;
-              idx--;
-            } else {
-              board[--idx][x] = tmp;
-            }
+            else if (board[idx][x] === tmp) board[idx--][x] *= 2;
+            else board[--idx][x] = tmp;
           }
         }
         break;
@@ -82,17 +72,12 @@ const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
               board[y][x] = 0;
             }
           }
-          let tmp;
           let idx = 0;
           while (queue.length) {
-            tmp = queue.shift();
+            const tmp = queue.shift();
             if (!board[y][idx]) board[y][idx] = tmp;
-            else if (board[y][idx] === tmp) {
-              board[y][idx] *= 2;
-              idx++;
-            } else {
-              board[y][++idx] = tmp;
-            }
+            else if (board[y][idx] === tmp) board[y][idx++] *= 2;
+            else board[y][++idx] = tmp;
           }
         }
         break;
@@ -104,17 +89,12 @@ const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
               board[y][x] = 0;
             }
           }
-          let tmp;
           let idx = n - 1;
           while (queue.length) {
-            tmp = queue.shift();
+            const tmp = queue.shift();
             if (!board[y][idx]) board[y][idx] = tmp;
-            else if (board[y][idx] === tmp) {
-              board[y][idx] *= 2;
-              idx--;
-            } else {
-              board[y][--idx] = tmp;
-            }
+            else if (board[y][idx] === tmp) board[y][idx--] *= 2;
+            else board[y][--idx] = tmp;
           }
         }
         break;
