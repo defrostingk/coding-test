@@ -19,36 +19,30 @@ const input = fs.readFileSync('../input.txt').toString().trim().split('\n');
     const dy = [-1, 1, 0, 0];
 
     while (queue.length > head) {
-      const [curX, curY, brokenWall] = queue[head++];
+      const [curX, curY, wall] = queue[head++];
       if (curY === height - 1 && curX === width - 1) {
-        return visited[curY][curX][brokenWall];
+        return visited[curY][curX][wall];
       }
 
       for (let i = 0; i < dx.length; i++) {
         const [nextX, nextY] = [curX + dx[i], curY + dy[i]];
-        if (isAvailable(nextX, nextY, brokenWall)) {
+        if (isAvailable(nextX, nextY, wall)) {
           if (map[nextY][nextX] === EMPTY) {
-            visited[nextY][nextX][brokenWall] =
-              visited[curY][curX][brokenWall] + 1;
-            queue.push([nextX, nextY, brokenWall]);
+            visited[nextY][nextX][wall] = visited[curY][curX][wall] + 1;
+            queue.push([nextX, nextY, wall]);
           }
-          if (!brokenWall && map[nextY][nextX] === WALL) {
-            visited[nextY][nextX][brokenWall + 1] =
-              visited[curY][curX][brokenWall] + 1;
-            queue.push([nextX, nextY, brokenWall + 1]);
+          if (!wall && map[nextY][nextX] === WALL) {
+            visited[nextY][nextX][wall + 1] = visited[curY][curX][wall] + 1;
+            queue.push([nextX, nextY, wall + 1]);
           }
         }
       }
     }
     return -1;
 
-    function isAvailable(x, y, brokenWall) {
+    function isAvailable(x, y, wall) {
       return (
-        x >= 0 &&
-        y >= 0 &&
-        x < width &&
-        y < height &&
-        !visited[y][x][brokenWall]
+        x >= 0 && y >= 0 && x < width && y < height && !visited[y][x][wall]
       );
     }
   }
